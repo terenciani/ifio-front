@@ -1,6 +1,6 @@
 <template>
   <v-row align="center" justify="center" class="font-weight-light">
-    <v-col cols="12" sm="8" md="4">
+    <v-col cols="12" sm="10" md="8">
       <v-card>
         <v-toolbar dark color="teal">
           <v-spacer></v-spacer>
@@ -37,66 +37,8 @@
             >
           </v-form>
         </v-card-text>
-        <v-card-actions class="pb-5 text-center">
-          <v-btn
-            @click="recoveryDialog = true"
-            text
-            block
-            color="primary"
-            class="font-weight-light text-capitalize"
-            >Recuperar senha</v-btn
-          >
-        </v-card-actions>
       </v-card>
     </v-col>
-
-    <!-- DIALOG DE RECUPERAÇÃO DE SENHA -->
-    <v-dialog v-model="recoveryDialog" max-width="500">
-      <v-card>
-        <v-toolbar dark color="teal">
-          <v-btn icon dark @click="recoveryCancel()">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Recuperar Senha</v-toolbar-title>
-        </v-toolbar>
-        <v-card-text>
-          <v-form ref="recoveryForm" v-model="recoveryValid">
-            <v-row class="pt-5">
-              <v-col cols="12" class="pb-0">
-                <v-text-field
-                  v-model="recoveryEmail"
-                  prepend-icon="mdi-email"
-                  label="E-mail"
-                  required
-                  :rules="emailRules"
-                  type="email"
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" class="pt-0 mt-0">
-                <v-btn
-                  block
-                  large
-                  @click="recoverySubmit"
-                  color="primary"
-                  class="elevation-0 mt-5 font-weight-bold text-uppercase"
-                  >Recuperar Senha</v-btn
-                >
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-card-text>
-
-        <v-card-actions class="text-xs-center">
-          <p class="text-justify info pa-5 white--text">
-            <span class="font-weight-bold">AVISO:</span> Após preencher o seu
-            e-mail e clicar no botão
-            <span class="font-weight-bold">Recuperar Senha</span>, será enviado
-            ao e-mail informado uma senha provisória que deve ser usada para
-            acessar o sistema e ser alterada logo em seguida.
-          </p>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
     <v-dialog v-model="loadingDialog" hide-overlay persistent width="350">
       <v-card color="primary" dark>
         <v-card-text>

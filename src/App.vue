@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-app v-if="loggedUser">
+    <v-app v-if="true">
+      <login />
+    </v-app>
+    <!--<v-app v-if="loggedUser">
       <router-view></router-view>
     </v-app>
     <v-app id="inspire" transition="slide-x-transition" v-else-if="!loggedUser">
@@ -10,14 +13,16 @@
           <router-view></router-view>
         </v-container>
       </v-main>
-    </v-app>
+    </v-app>-->
   </div>
 </template>
 <script>
-import DrawerMenu from "@/components/DrawerMenu";
+import Login from "./views/Login.vue";
+// import DrawerMenu from "@/components/DrawerMenu";
 export default {
   components: {
-    DrawerMenu,
+    Login,
+    // DrawerMenu,
   },
   methods: {
     async logout() {
