@@ -2,8 +2,6 @@
 
 import AuthService from "./../../../service/AuthService";
 import API from "../../../Api";
-//import Store from "../../../store";
-import Router from "../../../router";
 export default {
   state: {
     user: {
@@ -50,7 +48,6 @@ export default {
         );
         if (tokenIsValid && loggedUser?._id) {
           context.commit("setLoggedUser", loggedUser);
-          Router.push("/");
         } else {
           context.commit("loggoutUser");
         }
@@ -64,8 +61,6 @@ export default {
         context.commit("loggoutUser");
       } catch (error) {
         console.log(error);
-      } finally {
-        Router.push("/login");
       }
     },
   },

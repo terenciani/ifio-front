@@ -1,9 +1,13 @@
 <template>
   <div>
-    <v-app id="inspire" transition="slide-x-transition" v-if="loggedUser.logged">
+    <v-app
+      id="inspire"
+      transition="slide-x-transition"
+      v-if="loggedUser.logged"
+    >
       <drawer-menu></drawer-menu>
       <v-main>
-        <v-container>
+        <v-container fill-height>
           <router-view></router-view>
         </v-container>
       </v-main>

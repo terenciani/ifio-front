@@ -1,9 +1,16 @@
 import axios from "axios";
 import config from "../config";
-// import Store from "./store";
+import Store from "./store";
 const instance = axios.create({
   baseURL: config.apiHost,
 });
+
+instance
+  .get("helpers")
+  .then((res) => {
+    Store.commit("apiHelper/setHelpers", res.data);
+  })
+  .catch(console.log);
 
 /*
 instance

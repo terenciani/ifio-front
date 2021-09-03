@@ -103,7 +103,6 @@
 <script>
 import DrawerItems from "../data/DrawerItems";
 import config from "../../config";
-import AuthService from "../service/AuthService";
 export default {
   data() {
     return {
@@ -118,13 +117,11 @@ export default {
   },
   methods: {
     logout() {
-      // AuthService.removeUserFromLocalStorage();
       this.$store.dispatch("logoffUser");
-      // this.$router.push('/login');
     },
   },
   async mounted() {
-    this.user = AuthService.getLoggedUser();
+    this.user = this.$store.getters.getLoggedUser;
     this.items = await DrawerItems.getItems();
   },
 };

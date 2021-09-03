@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mt-5">Infográficos</v-row>
+  <v-row class="mt-5">Usuários</v-row>
 </template>
 
 <script>
