@@ -1,4 +1,4 @@
-import AuthService from "../service/AuthService";
+// import AuthService from "../service/AuthService";
 const adminItems = [
   {
     icon: "mdi-cogs",
@@ -7,8 +7,13 @@ const adminItems = [
     children: [
       {
         icon: "mdi-slot-machine",
-        text: "Infográfico",
+        text: "Infográficos",
         to: "/infographic",
+      },
+      {
+        icon: "mdi-account-group",
+        text: "Gestão de Usuários",
+        to: "/user",
       },
     ],
   },
@@ -18,16 +23,17 @@ const userItems = [
   {
     icon: "mdi-home",
     text: "Contador",
-    to: "/",
+    to: "/counter",
     heading: false,
   },
 ];
 
 class DrawerItems {
   static async getItems() {
-    let roleUser = await AuthService.getRoleUser();
+    return userItems.concat(adminItems);
+    /*let roleUser = await AuthService.getRoleUser();
     if (roleUser == "ADMIN") return userItems.concat(adminItems);
-    return userItems;
+    return userItems;*/
   }
 }
 export default DrawerItems;

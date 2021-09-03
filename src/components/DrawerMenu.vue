@@ -37,9 +37,9 @@
     <v-navigation-drawer v-model="drawer" temporary absolute>
       <v-list class="text-xs-center" dense>
         <v-img
-          :src="`${host}/assets/icon/logo`"
-          style="width: 50%; margin: 0 auto"
-          alt="Logo"
+          :src="logoVertical"
+          class="v-responsive mx-15 my-5"
+          alt="Logo do IFPR"
         />
         <v-divider />
         <template v-for="item in items">
@@ -113,6 +113,7 @@ export default {
       drawer: true,
       group: null,
       items: [],
+      logoVertical: require("@/assets/paranavai-vertical.png"),
     };
   },
   methods: {

@@ -1,11 +1,18 @@
 "use strict";
+/* eslint-disable */
 var md5 = require("md5");
 import API from "../Api";
 
 export default class AuthService {
   //--------------------------AUTH--------------------------//
   static async signIn({ email, password }) {
-    let passwordMd5 = md5(password);
+    return {
+      message: "Usuário autorizado",
+      user: {
+        _id: "1324",
+      },
+    };
+    /*let passwordMd5 = md5(password);
     try {
       let response = await API.post("signin", {
         email: email.toLowerCase(),
@@ -14,7 +21,7 @@ export default class AuthService {
       return response.data;
     } catch (error) {
       throw error.response.data;
-    }
+    }*/
   } // signIn()
 
   static async recovery(email) {

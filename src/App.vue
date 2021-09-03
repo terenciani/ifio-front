@@ -5,24 +5,24 @@
     </v-app>
     <!--<v-app v-if="loggedUser">
       <router-view></router-view>
-    </v-app>
-    <v-app id="inspire" transition="slide-x-transition" v-else-if="!loggedUser">
+    </v-app> -->
+    <v-app id="inspire" transition="slide-x-transition" v-else>
       <drawer-menu></drawer-menu>
       <v-main>
         <v-container>
           <router-view></router-view>
         </v-container>
       </v-main>
-    </v-app>-->
+    </v-app>
   </div>
 </template>
 <script>
 import Login from "./views/Login.vue";
-// import DrawerMenu from "@/components/DrawerMenu";
+import DrawerMenu from "@/components/DrawerMenu";
 export default {
   components: {
     Login,
-    // DrawerMenu,
+    DrawerMenu,
   },
   methods: {
     async logout() {

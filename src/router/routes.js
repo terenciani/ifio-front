@@ -14,13 +14,18 @@ const routes = [
     component: () => import(`@/views/Login.vue`),
   },
   {
-    path: "/",
+    path: "/infographic",
+    name: "Relatórios Gerenciais",
+    component: () => import(`@/views/Infographic.vue`),
+  },
+  {
+    path: "/counter",
     name: "Contador",
     meta: {
       access: ["USER"],
       requiresAuth: true,
     },
-    component: () => import(`@/views/Home.vue`),
+    component: () => import(`@/views/Counter.vue`),
   },
 ];
 export default routes;
