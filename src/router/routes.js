@@ -1,10 +1,11 @@
+/* eslint-disable */
 import Store from "../store";
 
 const { users } = Store.getters["apiHelper/allHelpers"];
 
 const { rules } = users;
 
-const routes = [
+const internalRoutes = [
   {
     path: "/unauthorized",
     name: "Acesso não autorizado",
@@ -14,10 +15,14 @@ const routes = [
     path: "/expired",
     name: "Sessão expirada",
     component: () => import(`@/views/Expired.vue`),
-  },
+  }
+];
+
+const adminRoutes = [
   {
-    path: "/infographic",
+    path: "/infographic",    
     name: "Relatórios Gerenciais",
+    icon: "mdi-slot-machine",
     meta: {
       access: [rules.manager],
       requiresAuth: true,
@@ -25,17 +30,9 @@ const routes = [
     component: () => import(`@/views/Infographic.vue`),
   },
   {
-    path: "/counter",
-    name: "Contador",
-    meta: {
-      access: [rules.server],
-      requiresAuth: true,
-    },
-    component: () => import(`@/views/Counter.vue`),
-  },
-  {
     path: "/user",
     name: "Usuários",
+    icon: "mdi-account-group",
     meta: {
       access: [rules.manager],
       requiresAuth: true,
@@ -43,4 +40,42 @@ const routes = [
     component: () => import(`@/views/User.vue`),
   },
 ];
-export default routes;
+
+const userRoutes = [
+  {
+    path: "/counter",
+    name: "Contador",    
+    icon: "mdi-home",
+    heading: false,
+    meta: {
+      access: [rules.server],
+      requiresAuth: true,
+    },
+    component: () => import(`@/views/Counter.vue`),
+  },
+];
+
+const adminHeader = [
+  {
+    icon: "mdi-cogs",
+    name: "Administração",
+    heading: true,
+    children: new Array()
+  },
+];
+
+class DrawerItems {
+  static async getItems() {
+    const user = Store.getters.getLoggedUser;
+    if(user.rule === rules.manager){
+      adminHeader[0].children = adminRoutes;
+      return userRoutes.concat(adminHeader)
+    }else {
+      return userRoutes;
+    }
+  }
+}
+
+const routes = adminRoutes.concat(userRoutes).concat(internalRoutes);
+
+export { routes, DrawerItems };
