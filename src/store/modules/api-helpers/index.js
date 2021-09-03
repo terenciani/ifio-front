@@ -10,7 +10,7 @@ const mutations = {
 
 const getters = {
   allHelpers: (state) => state.helpers,
-  userHelpers: (state) => state.helpers.user,
+  userHelpers: (state) => state.helpers.users,
 };
 
 export default {

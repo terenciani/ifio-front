@@ -6,21 +6,21 @@
       <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
-      <v-list color="transparent" class="d-none d-sm-flex">
+      <v-list color="transparent" class="d-none d-sm-flex" max-width="350">
         <v-menu offset-y transition="scale-transition">
           <template v-slot:activator="{ on, attrs }">
             <v-list-item v-on="on" v-bind="attrs">
-              <v-list-item-icon>
-                <v-icon large>mdi-logout</v-icon>
-              </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title class="title">
-                  {{ user.name }}
+                  {{ user.name }} i
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   {{ user.email }}
                 </v-list-item-subtitle>
               </v-list-item-content>
+              <v-list-item-icon>
+                <v-icon large>mdi-logout</v-icon>
+              </v-list-item-icon>
             </v-list-item>
           </template>
           <v-list dense>
@@ -37,44 +37,44 @@
     <v-navigation-drawer v-model="drawer" temporary absolute>
       <v-list class="text-xs-center" dense>
         <v-img
-          :src="`${host}/assets/icon/logo`"
-          style="width: 50%; margin: 0 auto"
-          alt="Logo"
+          :src="logoVertical"
+          class="v-responsive mx-15 my-5"
+          alt="Logo do IFPR"
         />
         <v-divider />
         <template v-for="item in items">
           <v-list-item
             v-if="!item.heading"
-            :key="item.text"
-            :to="item.to"
-            @click="toolbarTitle = item.text"
+            :key="item.name"
+            :to="item.path"
+            @click="toolbarTitle = item.name"
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
+            <v-list-item-title>{{ item.name }}</v-list-item-title>
           </v-list-item>
           <v-list-group
-            :key="item.text"
+            :key="item.name"
             v-else
             :value="false"
             :prepend-icon="item.icon"
             active-class="deep-purple--text text--accent-4"
           >
             <template v-slot:activator>
-              <v-list-item-title>{{ item.text }}</v-list-item-title>
+              <v-list-item-title>{{ item.name }}</v-list-item-title>
             </template>
             <v-list-item
               v-for="child in item.children"
-              :key="child.text"
-              :to="child.to"
-              @click="toolbarTitle = child.text"
+              :key="child.name"
+              :to="child.path"
+              @click="toolbarTitle = child.name"
               class="ml-5"
             >
               <v-list-item-icon>
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-item-icon>
-              <v-list-item-title>{{ child.text }}</v-list-item-title>
+              <v-list-item-title>{{ child.name }}</v-list-item-title>
             </v-list-item>
           </v-list-group>
         </template>
@@ -101,9 +101,8 @@
   </div>
 </template>
 <script>
-import DrawerItems from "../data/DrawerItems";
+import { DrawerItems } from "../router/routes";
 import config from "../../config";
-import AuthService from "../service/AuthService";
 export default {
   data() {
     return {
@@ -113,17 +112,16 @@ export default {
       drawer: true,
       group: null,
       items: [],
+      logoVertical: require("@/assets/paranavai-vertical.png"),
     };
   },
   methods: {
     logout() {
-      // AuthService.removeUserFromLocalStorage();
       this.$store.dispatch("logoffUser");
-      // this.$router.push('/login');
     },
   },
   async mounted() {
-    this.user = AuthService.getLoggedUser();
+    this.user = this.$store.getters.getLoggedUser;
     this.items = await DrawerItems.getItems();
   },
 };

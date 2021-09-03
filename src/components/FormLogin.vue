@@ -75,11 +75,10 @@ export default {
   data() {
     return {
       loginValid: true,
-      recoveryValid: true,
-      user: {},
-      defaultRoute: "/",
-      recoveryEmail: "",
-      recoveryDialog: false,
+      user: {
+        email: "terenciani@outlook.com",
+        password: "12345",
+      },
       loadingDialog: false,
       response: {
         message: "",
@@ -95,63 +94,35 @@ export default {
   },
 
   methods: {
-    recoveryCancel() {
-      this.$refs.recoveryForm.reset();
-      this.$refs.recoveryForm.resetValidation();
-      this.recoveryDialog = false;
-      this.recoveryEmail = "";
-    },
-    async recoverySubmit() {
-      if (!this.$refs.recoveryForm.validate()) return;
-      this.loadingDialog = true;
-      try {
-        let resp = await AuthService.recovery(this.recoveryEmail);
-        this.response.message = resp.message;
-        if (resp.status == 200) {
-          this.response.type = "success";
-          this.$refs.recoveryForm.resetValidation();
-          this.$refs.recoveryForm.reset();
-          this.recoveryDialog = false;
-        } else {
-          this.response.type = "warning";
-        }
-      } catch (error) {
-        this.response.message =
-          "Ocorreu um erro interno ao processar sua solicitação. Tente novamente mais tarde!";
-        this.response.type = "error";
-      } finally {
-        this.loadingDialog = false;
-        this.response.active = true;
-      }
-    },
-
     async signIn() {
       if (!this.$refs.loginForm.validate()) return;
       this.loadingDialog = true;
       try {
-        let resp = await AuthService.signIn(this.user);
-        this.response.message = resp.message;
-        if (resp.status == 200 && resp.user && resp.user.id_user) {
-          await AuthService.setUserInLocalStorage(resp.user);
-          this.$store.dispatch("loadLoggedUser");
-          this.response.type = "success";
+        let userData = await AuthService.signIn(this.user);
+        if (userData?._id) {
+          await this.$store.dispatch("loggedUser", userData);
+          this.showMessage("success", "Usuário Autorizado", true);
           this.$refs.loginForm.resetValidation();
           this.$refs.loginForm.reset();
-        } else this.response.type = "warning";
+        } else {
+          this.showMessage(
+            "error",
+            "Não foi possível autenticar esse usuário",
+            true
+          );
+        }
       } catch (error) {
-        console.log(error);
-        this.response.message =
-          "Ocorreu um erro interno ao processar sua solicitação. Tente novamente mais tarde!";
-        this.response.type = "error";
+        let type = error.statusCode == 500 ? "error" : "warning";
+        this.showMessage(type, error.message, true);
       } finally {
         this.loadingDialog = false;
-        this.response.active = true;
       }
     },
-  },
-  mounted() {
-    if (this.$route.query && this.$route.query.r)
-      this.defaultRoute = this.$route.query.r;
+    showMessage(type, message, active) {
+      this.response.type = type;
+      this.response.message = message;
+      this.response.active = active;
+    },
   },
 };
 </script>

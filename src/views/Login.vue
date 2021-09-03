@@ -4,7 +4,7 @@
       <v-col cols="12" sm="6" align="center" class="align-self-center">
         <v-img
           class="v-responsive"
-          :src="$vuetify.breakpoint.xs ? logoVertical : logoHorizontal"
+          :src="$vuetify.breakpoint.xs ? logoHorizontal : logoVertical"
           :max-width="$vuetify.breakpoint.xs ? 350 : 200"
         />
       </v-col>

@@ -6,6 +6,14 @@ const instance = axios.create({
 });
 
 instance
+  .get("helpers")
+  .then((res) => {
+    Store.commit("apiHelper/setHelpers", res.data);
+  })
+  .catch(console.log);
+
+/*
+instance
   .get("get-helpers")
   .then((res) => {
     Store.commit("apiHelper/setHelpers", res.data);
@@ -41,5 +49,6 @@ instance.interceptors.request.use((req) => {
   req.meta.startedAs = Date.now();
   return req;
 });
+*/
 
 export default instance;
