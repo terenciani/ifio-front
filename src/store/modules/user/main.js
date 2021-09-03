@@ -7,10 +7,10 @@ import Router from "../../../router";
 export default {
   state: {
     user: {
-      id_user: "",
+      _id: "",
       logged: null,
       name: "",
-      role: "",
+      rule: "",
       email: "",
       token: "",
       status: "",
@@ -22,20 +22,20 @@ export default {
   },
   mutations: {
     setLoggedUser(state, payload) {
-      state.user.id_user = payload.id_user;
-      state.user.logged = payload.id_user ? true : false;
+      state.user._id = payload._id;
+      state.user.logged = payload._id ? true : false;
       state.user.name = payload.name;
-      state.user.role = payload.role;
+      state.user.rule = payload.rule;
       state.user.email = payload.email;
       state.user.token = payload.token;
       state.user.status = payload.status;
       API.defaults.headers["x-access-token"] = payload.token;
     },
     loggoutUser(state) {
-      state.user.id_user = "";
+      state.user._id = "";
       state.user.logged = null;
       state.user.name = "";
-      state.user.role = "";
+      state.user.rule = "";
       state.user.email = "";
       state.user.token = "";
       state.user.status = "";
@@ -43,30 +43,24 @@ export default {
     },
   },
   actions: {
-    async loadLoggedUser() {
-      /*try {
-        let loggedUser = AuthService.getLoggedUser();
+    async loggedUser(context, loggedUser) {
+      try {
         const tokenIsValid = await AuthService.varefyIfTokenIsValid(
           loggedUser.token
         );
-        if (tokenIsValid && loggedUser && loggedUser.id_user) {
+        if (tokenIsValid && loggedUser?._id) {
           context.commit("setLoggedUser", loggedUser);
-          if (
-            loggedUser.status ===
-            Store.getters["apiHelper/userHelpers"].status.update
-          )
-            Router.push("/profile");
-          else Router.push("/");
+          Router.push("/");
         } else {
-          context.dispatch("logoffUser");
+          context.commit("loggoutUser");
         }
       } catch (error) {
-        console.log(error);
-      }*/
+        context.commit("loggoutUser");
+        throw error;
+      }
     },
     logoffUser(context) {
       try {
-        AuthService.removeUserFromLocalStorage();
         context.commit("loggoutUser");
       } catch (error) {
         console.log(error);

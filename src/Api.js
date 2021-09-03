@@ -1,10 +1,11 @@
 import axios from "axios";
 import config from "../config";
-import Store from "./store";
+// import Store from "./store";
 const instance = axios.create({
   baseURL: config.apiHost,
 });
 
+/*
 instance
   .get("get-helpers")
   .then((res) => {
@@ -41,5 +42,6 @@ instance.interceptors.request.use((req) => {
   req.meta.startedAs = Date.now();
   return req;
 });
+*/
 
 export default instance;
