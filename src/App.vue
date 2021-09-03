@@ -1,18 +1,15 @@
 <template>
   <div>
-    <v-app v-if="true">
-      <login />
-    </v-app>
-    <!--<v-app v-if="loggedUser">
-      <router-view></router-view>
-    </v-app> -->
-    <v-app id="inspire" transition="slide-x-transition" v-else>
+    <v-app id="inspire" transition="slide-x-transition" v-if="loggedUser.logged">
       <drawer-menu></drawer-menu>
       <v-main>
         <v-container>
           <router-view></router-view>
         </v-container>
       </v-main>
+    </v-app>
+    <v-app v-else>
+      <login />
     </v-app>
   </div>
 </template>
@@ -31,11 +28,8 @@ export default {
   },
   computed: {
     loggedUser() {
-      return this.$store.getters.getStateLog;
+      return this.$store.getters.getLoggedUser;
     },
-  },
-  async beforeMount() {
-    await this.$store.dispatch("loadLoggedUser");
   },
   created() {
     window.getApp = this;

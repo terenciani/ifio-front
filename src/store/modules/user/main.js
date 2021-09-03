@@ -18,7 +18,7 @@ export default {
   },
   getters: {
     getStateLog: (state) => state.user.logged,
-    getUserLogged: (state) => state.user,
+    getLoggedUser: (state) => state.user,
   },
   mutations: {
     setLoggedUser(state, payload) {
