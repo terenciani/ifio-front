@@ -12,7 +12,7 @@
             <v-list-item v-on="on" v-bind="attrs">
               <v-list-item-content>
                 <v-list-item-title class="title">
-                  {{ user.name }} i
+                  {{ user.name }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   {{ user.email }}
