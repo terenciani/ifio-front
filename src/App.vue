@@ -7,7 +7,7 @@
     >
       <drawer-menu></drawer-menu>
       <v-main>
-        <v-container fill-height>
+        <v-container fill-height class="pt-5">
           <router-view></router-view>
         </v-container>
       </v-main>
